@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Manager</title>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
+
+    .container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 450px;
+    }
+
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        color: #34495e;
+        margin-top: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        padding: 8px;
+        border-bottom: 1px solid #ecf0f1;
+        color: #7f8c8d;
+    }
+
+    label {
+        font-weight: bold;
+        color: #34495e;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 15px;
+        }
+        input[type="text"] {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<script>
+    function loadCookies() {
+        const cookies = document.cookie.split(';');
+        const list = document.getElementById('cookieList');
+        list.innerHTML = '';
+        if (cookies.length > 0 && cookies[0] !== '') {
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.trim().split('=');
+                if (name) {
+                    const li = document.createElement('li');
+                    li.textContent = `Назва кукі: ${name}; значення: ${value || ''}`;
+                    list.appendChild(li);
+                }
+            });
+        } else {
+            list.innerHTML = '<li>Пока что куки нет.</li>';
+        }
+    }
+    window.onload = loadCookies;
+</script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Текущие куки</h2>
+        <ul id="cookieList"></ul>
+
+        <h3>Добавить новое куки</h3>
+        <form method="post" action="http://localhost:8080/hw/cookie">
+            <label for="cookieValue">Введите значение куки:</label>
+            <input type="text" id="cookieValue" name="cookieValue" size="25">
+            <br><br>
+            <input type="submit" value="Отправить">
+        </form>
+    </div>
+</body>
+</html>

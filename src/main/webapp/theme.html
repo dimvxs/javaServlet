@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Смена цвета фона</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 100px;
+        transition: background-color 0.5s ease;
+    }
+
+    .container {
+        display: inline-block;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #2c3e50;
+    }
+
+    label {
+        margin: 0 10px;
+        font-size: 18px;
+        color: #34495e;
+        cursor: pointer;
+    }
+
+    input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    input[type="submit"] {
+        margin-top: 15px;
+        background-color: #3498db;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+<script>
+    // При загрузке страницы восстанавливаем выбранный цвет
+ window.onload = function() {
+    const cookies = document.cookie.split(';');
+    let bgColor = null;
+    cookies.forEach(cookie => {
+        const [name, value] = cookie.trim().split('=');
+        if (name === 'bgColor') {
+            bgColor = value;
+        }
+    });
+    if (bgColor) {
+        document.body.style.backgroundColor = bgColor;
+        const selected = document.querySelector(`input[value="${bgColor}"]`);
+        if (selected) selected.checked = true;
+    }
+}
+
+</script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Выберите цвет фона</h2>
+        <form method="post" action="http://localhost:8080/hw/theme">
+            <label>
+                <input type="radio" name="color" value="black">
+                Тёмный
+            </label>
+            <label>
+                <input type="radio" name="color" value="white">
+                Светлый
+            </label>
+            <br><br>
+            <input type="submit" value="Применить">
+        </form>
+    </div>
+</body>
+</html>
